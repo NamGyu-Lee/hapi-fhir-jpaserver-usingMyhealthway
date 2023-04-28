@@ -14,25 +14,24 @@ spring:
     check-location: false
     baselineOnMigrate: true
   datasource:
-    url: 'jdbc:h2:file:./target/database/h2'
-    #url: jdbc:h2:mem:test_mem
-    username: sa
-    password: null
-    driverClassName: org.h2.Driver
-    max-active: 15
+    url: 'jdbc:postgresql://fhir-postgres:5432/hapi_dstu3'
+    username: DTxUser
+    password: Khmc1803!
+    driverClassName: org.postgresql.Driver
+    #max-active: 15
 
     # database connection pool size
     hikari:
       maximum-pool-size: 10
   jpa:
     properties:
-      hibernate.format_sql: false
-      hibernate.show_sql: false
+      hibernate.format_sql: true
+      hibernate.show_sql: true
       #Hibernate dialect is automatically detected except Postgres and H2.
       #If using H2, then supply the value of ca.uhn.fhir.jpa.model.dialect.HapiFhirH2Dialect
       #If using postgres, then supply the value of ca.uhn.fhir.jpa.model.dialect.HapiFhirPostgres94Dialect
 
-      hibernate.dialect: ca.uhn.fhir.jpa.model.dialect.HapiFhirH2Dialect
+      hibernate.dialect: ca.uhn.fhir.jpa.model.dialect.HapiFhirPostgres94Dialect
   #      hibernate.hbm2ddl.auto: update
   #      hibernate.jdbc.batch_size: 20
   #      hibernate.cache.use_query_cache: false
@@ -40,7 +39,7 @@ spring:
   #      hibernate.cache.use_structured_entries: false
   #      hibernate.cache.use_minimal_puts: false
   ###    These settings will enable fulltext search with lucene
-      hibernate.search.enabled: false
+      hibernate.search.enabled: true
   #      hibernate.search.backend.type: lucene
   #      hibernate.search.backend.analysis.configurer: ca.uhn.fhir.jpa.search.HapiLuceneAnalysisConfigurer
   #      hibernate.search.backend.directory.type: local-filesystem
@@ -78,8 +77,8 @@ hapi:
     #    supported_resource_types:
     #      - Patient
     #      - Observation
-    #    allow_cascading_deletes: true
-    #    allow_contains_searches: true
+    allow_cascading_deletes: true
+    allow_contains_searches: true
     #    allow_external_references: true
     #    allow_multiple_delete: true
     #    allow_override_default_search_params: true
@@ -89,7 +88,7 @@ hapi:
     #    default_pretty_print: true
     #    default_page_size: 20
     #    delete_expunge_enabled: true
-    #    enable_repository_validating_interceptor: false
+    enable_repository_validating_interceptor: true
     #    enable_index_missing_fields: false
     #    enable_index_of_type: true
     #    enable_index_contained_resource: false
@@ -144,10 +143,14 @@ hapi:
     #    reuse_cached_search_results_millis: 60000
     tester:
       home:
-        name: Local Tester
-        server_address: 'http://localhost:8080/fhir'
+        name: FHIR-Server
+        server_address: 'http://http://34.125.129.94/:80/fhir'
         refuse_to_fetch_third_party_urls: false
         fhir_version: R4
+        #2023.01.18 validation add
+        validation:
+          requests_enabled: true
+          responses_enabled: true
       global:
         name: Global Tester
         server_address: "http://hapi.fhir.org/baseR4"

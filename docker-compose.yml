@@ -6,19 +6,18 @@ services:
     restart: on-failure
     ports:
       - "8080:8080"
-  hapi-fhir-mysql:
-    image: mysql:latest
-    container_name: hapi-fhir-mysql
-    #https://dev.mysql.com/doc/refman/8.0/en/identifier-case-sensitivity.html
-    command: --lower_case_table_names=1
+  fhir-postgres:
+    image: postgres:15.1
+    #container_name: postgres
     restart: always
+    ports:
+      - "5432:5432"
     environment:
-      MYSQL_DATABASE: 'hapi'
-      MYSQL_USER: 'admin'
-      MYSQL_PASSWORD: 'admin'
-      MYSQL_ROOT_PASSWORD: 'admin'
+      POSTGRES_DB: "hapi_dstu3"
+      POSTGRES_USER: "DTxUser"
+      POSTGRES_PASSWORD: "Khmc1803!"
     volumes:
-      - hapi-fhir-mysql:/var/lib/mysql
+      - /product/postgresql/data:/var/lib/postgresql/data
   nginx:
       image: nginx:stable
       restart: always
