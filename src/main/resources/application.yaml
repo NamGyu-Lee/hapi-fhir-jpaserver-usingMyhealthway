@@ -144,7 +144,7 @@ hapi:
     tester:
       home:
         name: FHIR-Server
-        server_address: 'http://http://34.125.129.94/:80/fhir'
+        server_address: 'http://34.125.129.94/fhir'
         refuse_to_fetch_third_party_urls: false
         fhir_version: R4
         #2023.01.18 validation add
