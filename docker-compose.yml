@@ -19,16 +19,16 @@ services:
       MYSQL_ROOT_PASSWORD: 'admin'
     volumes:
       - hapi-fhir-mysql:/var/lib/mysql
-   nginx:
+  nginx:
       image: nginx:stable
       restart: always
       ports: 
-          - target: 80         ## inner port
-            published: 80      ## host os port
-            protocol: tcp      ## port protocal
-          - target: 443        ## inner port
-            published: 443     ## host os port
-            protocol: tcp      ## port protocal
+          - target: 80         # inner port
+            published: 80      # host os port
+            protocol: tcp      # port protocal
+          - target: 443        # inner port
+            published: 443     # host os port
+            protocol: tcp      # port protocal
       volumes:
           - ./nginx/log:/var/log/nginx/
           - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
